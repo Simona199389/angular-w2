@@ -1,36 +1,79 @@
 <h1 style="text-align: center">{{ title }}</h1>
 <div class="main-container">
-  <div *ngIf="!endOfReview">
-    <div class="book-info">
-      <div>Име на книгата</div>
-      <div>{{ books[index].title }}</div>
-    </div>
-    <div class="book-info">
-      <div>Описание на книгата</div>
-      <div>{{ books[index].description }}</div>
-    </div>
-    <div class="book-info">
-      <div>Автор на книгата</div>
-      <div>{{ books[index].author }}</div>
-    </div>
-    <div class="book-info">
-      <div>Рейтинг до момента</div>
-      <div>{{ calculateBookRating() }}</div>
-    </div>
-    <div class="rating-component">
-      <div
-        class="button"
-        *ngFor="let number of [1, 2, 3, 4, 5]"
-        (click)="addRating(number)"
-      >
-        {{ number }}
+  <form>
+    <div *ngIf="!endOfReview">
+      <div class="book-info">
+        <div>Име на книгата</div>
+        <div
+          class="book-container"
+          *ngIf="!selectedBookPropertyTitle"
+          (click)="editBookProperty('title')"
+        >
+          {{ books[index].title }}
+        </div>
+        <div *ngIf="selectedBookPropertyTitle">
+          <input
+            type="text"
+            [(ngModel)]="books[index].title"
+            name="editTitle"
+          />
+        </div>
+      </div>
+      <div class="book-info">
+        <div>Описание на книгата</div>
+        <div
+          class="book-container"
+          *ngIf="!selectedBookPropertyDesc"
+          (click)="editBookProperty('description')"
+        >
+          {{ books[index].description }}
+        </div>
+        <div *ngIf="selectedBookPropertyDesc" class="book-container">
+          <textarea
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            type="text"
+            [(ngModel)]="books[index].description"
+            name="editDesc"
+          ></textarea>
+        </div>
+      </div>
+      <div class="book-info">
+        <div>Автор на книгата</div>
+        <div
+          class="book-container"
+          *ngIf="!selectedBookPropertyAuthor"
+          (click)="editBookProperty('author')"
+        >
+          {{ books[index].author }}
+        </div>
+        <div *ngIf="selectedBookPropertyAuthor" class="book-container">
+          <input
+            type="text"
+            [(ngModel)]="books[index].author"
+            name="editAuth"
+          />
+        </div>
+      </div>
+      <div class="book-info">
+        <div>Рейтинг до момента</div>
+        <div>{{ calculateBookRating() }}</div>
+      </div>
+      <div class="rating-component">
+        <div
+          class="button"
+          *ngFor="let number of [1, 2, 3, 4, 5]"
+          (click)="addRating(number)"
+        >
+          {{ number }}
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 
   <div class="end-screen" *ngIf="endOfReview">
     <h3 style="text-align: center">Вие оценихте всички книги успешно</h3>
     <div class="button" (click)="startOver()">Искам да ги оценя отново</div>
-    <div class="button">Не, ок съм</div>
+    <div class="button">Не ок съм</div>
   </div>
 </div>

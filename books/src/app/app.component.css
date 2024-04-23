@@ -18,6 +18,14 @@
     padding: 5px;
   }
 }
+form button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.book-container {
+  cursor: pointer;
+}
 .rating-component {
   border: 2px solid red;
   display: flex;
@@ -34,9 +42,18 @@
   flex-direction: column;
   gap: 10px;
 }
+
 .button {
   border: 2px solid orange;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+}
+input,
+textarea {
+  outline: none !important;
+  outline-style: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  resize: none;
 }

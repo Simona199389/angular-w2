@@ -1,11 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { TextFieldModule } from '@angular/cdk/text-field';
+
+interface Book {
+  id: number;
+  title: string;
+  description: string;
+  author: string;
+  numberOfRatings: number;
+  rating: number;
+}
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, FormsModule, TextFieldModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -13,6 +24,10 @@ export class AppComponent {
   title = 'Домашна работа № 2';
 
   index: number = 0;
+
+  selectedBookPropertyTitle = false;
+  selectedBookPropertyDesc = false;
+  selectedBookPropertyAuthor = false;
 
   endOfReview = false;
 
@@ -104,6 +119,13 @@ export class AppComponent {
     this.books[this.index].numberOfRatings++;
     if (this.index < this.books.length - 1) this.index++;
     else this.endOfReview = true;
+    this.resetEditFunctionality();
+  }
+
+  resetEditFunctionality() {
+    this.selectedBookPropertyTitle = false;
+    this.selectedBookPropertyDesc = false;
+    this.selectedBookPropertyAuthor = false;
   }
 
   calculateBookRating() {
@@ -112,6 +134,20 @@ export class AppComponent {
         ? 1
         : this.books[this.index].numberOfRatings;
     return (this.books[this.index].rating / numberOfRatings).toFixed(2);
+  }
+
+  editBookProperty(propertyName: keyof Book) {
+    switch (propertyName) {
+      case 'title':
+        this.selectedBookPropertyTitle = true;
+        break;
+      case 'description':
+        this.selectedBookPropertyDesc = true;
+        break;
+      case 'author':
+        this.selectedBookPropertyAuthor = true;
+        break;
+    }
   }
 
   startOver() {
